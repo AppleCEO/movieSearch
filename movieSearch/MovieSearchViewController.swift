@@ -7,7 +7,7 @@
 
 import UIKit
 
-class ViewController: UIViewController {
+class MovieSearchViewController: UIViewController {
 
   override func viewDidLoad() {
     super.viewDidLoad()
