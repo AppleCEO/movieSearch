@@ -27,7 +27,7 @@ class MovieTableViewCell: UITableViewCell {
 	
 	func putData(_ movie: Movie) {
 		downloadImage(from: movie.image)
-		self.titleLabel.text = movie.title
+		self.titleLabel.text = removeHTMLTagFrom(movie.title)
 		self.directorLabel.text = movie.director
 		self.actorLabel.text = movie.actor
 		self.userRatingLabel.text = movie.userRating
@@ -45,5 +45,9 @@ class MovieTableViewCell: UITableViewCell {
 	
 	private func getData(from url: URL, completion: @escaping (Data?, URLResponse?, Error?) -> ()) {
 		URLSession.shared.dataTask(with: url, completionHandler: completion).resume()
+	}
+	
+	private func removeHTMLTagFrom(_ string: String) -> String {
+		return string.replacingOccurrences(of: "<[^>]+>", with: "", options: .regularExpression, range: nil)
 	}
 }
