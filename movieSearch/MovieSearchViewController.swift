@@ -66,9 +66,11 @@ class MovieSearchViewController: UIViewController, StoryboardView {
 				self.view.endEditing(true)
 				self.movieTableView.deselectRow(at: indexPath, animated: false)
 				guard let movie = reactor?.currentState.movies[indexPath.row] else { return }
-				guard let url = URL(string: movie.link) else { return }
-				let viewController = SFSafariViewController(url: url)
-				self.searchController.present(viewController, animated: true, completion: nil)
+				let storyboard = UIStoryboard(name: "Main", bundle: nil)
+				let movieViewController = storyboard.instantiateViewController(withIdentifier: "MovieViewController") as! MovieViewController
+				movieViewController.movie = movie
+				self.navigationController?.pushViewController(movieViewController, animated: true)
+//				self.searchController.present(movieViewController, animated: true, completion: nil)
 			})
 			.disposed(by: disposeBag)
 	}

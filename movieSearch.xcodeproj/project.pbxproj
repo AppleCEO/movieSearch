@@ -11,6 +11,7 @@
 		330D892626B24E3500710A88 /* MovieSearchModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 330D892526B24E3500710A88 /* MovieSearchModel.swift */; };
 		330D892826B2817500710A88 /* MovieTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 330D892726B2817500710A88 /* MovieTableViewCell.swift */; };
 		330D892A26B28D9F00710A88 /* Role.swift in Sources */ = {isa = PBXBuildFile; fileRef = 330D892926B28D9F00710A88 /* Role.swift */; };
+		330D892C26B2CDCE00710A88 /* MovieViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 330D892B26B2CDCE00710A88 /* MovieViewController.swift */; };
 		33EDCC5326B17A9600F508E9 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33EDCC5226B17A9600F508E9 /* AppDelegate.swift */; };
 		33EDCC5526B17A9600F508E9 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33EDCC5426B17A9600F508E9 /* SceneDelegate.swift */; };
 		33EDCC5726B17A9600F508E9 /* MovieSearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33EDCC5626B17A9600F508E9 /* MovieSearchViewController.swift */; };
@@ -24,6 +25,7 @@
 		330D892526B24E3500710A88 /* MovieSearchModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieSearchModel.swift; sourceTree = "<group>"; };
 		330D892726B2817500710A88 /* MovieTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieTableViewCell.swift; sourceTree = "<group>"; };
 		330D892926B28D9F00710A88 /* Role.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Role.swift; sourceTree = "<group>"; };
+		330D892B26B2CDCE00710A88 /* MovieViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieViewController.swift; sourceTree = "<group>"; };
 		33EDCC4F26B17A9600F508E9 /* movieSearch.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = movieSearch.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		33EDCC5226B17A9600F508E9 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		33EDCC5426B17A9600F508E9 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -82,6 +84,7 @@
 				330D892526B24E3500710A88 /* MovieSearchModel.swift */,
 				330D892726B2817500710A88 /* MovieTableViewCell.swift */,
 				330D892926B28D9F00710A88 /* Role.swift */,
+				330D892B26B2CDCE00710A88 /* MovieViewController.swift */,
 			);
 			path = movieSearch;
 			sourceTree = "<group>";
@@ -220,6 +223,7 @@
 				33EDCC5726B17A9600F508E9 /* MovieSearchViewController.swift in Sources */,
 				330D892A26B28D9F00710A88 /* Role.swift in Sources */,
 				33EDCC6726B17E4800F508E9 /* MovieSearchViewReactor.swift in Sources */,
+				330D892C26B2CDCE00710A88 /* MovieViewController.swift in Sources */,
 				330D892826B2817500710A88 /* MovieTableViewCell.swift in Sources */,
 				330D892626B24E3500710A88 /* MovieSearchModel.swift in Sources */,
 				33EDCC5326B17A9600F508E9 /* AppDelegate.swift in Sources */,
