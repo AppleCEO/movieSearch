@@ -13,14 +13,14 @@ import RxCocoa
 import RxSwift
 
 class MovieSearchViewController: UIViewController, StoryboardView {
-  @IBOutlet var tableView: UITableView!
+  @IBOutlet var movieTableView: UITableView!
   let searchController = UISearchController(searchResultsController: nil)
 
   var disposeBag = DisposeBag()
 
   override func viewDidLoad() {
     super.viewDidLoad()
-    tableView.scrollIndicatorInsets.top = tableView.contentInset.top
+    movieTableView.scrollIndicatorInsets.top = movieTableView.contentInset.top
     searchController.dimsBackgroundDuringPresentation = false
     navigationItem.searchController = searchController
   }
@@ -41,11 +41,11 @@ class MovieSearchViewController: UIViewController, StoryboardView {
       .bind(to: reactor.action)
       .disposed(by: disposeBag)
 
-    tableView.rx.contentOffset
+    movieTableView.rx.contentOffset
       .filter { [weak self] offset in
         guard let `self` = self else { return false }
-        guard self.tableView.frame.height > 0 else { return false }
-        return offset.y + self.tableView.frame.height >= self.tableView.contentSize.height - 100
+        guard self.movieTableView.frame.height > 0 else { return false }
+        return offset.y + self.movieTableView.frame.height >= self.movieTableView.contentSize.height - 100
       }
       .map { _ in Reactor.Action.loadNextPage }
       .bind(to: reactor.action)
@@ -53,17 +53,18 @@ class MovieSearchViewController: UIViewController, StoryboardView {
 
     // State
     reactor.state.map { $0.movies }
-      .bind(to: tableView.rx.items(cellIdentifier: "cell")) { indexPath, movie, cell in
-        cell.textLabel?.text = movie.title
+      .bind(to: movieTableView.rx.items(cellIdentifier: "cell")) { indexPath, movie, cell in
+        guard let movieTableViewCell = cell as? MovieTableViewCell else { return }
+				movieTableViewCell.putData(movie)
       }
       .disposed(by: disposeBag)
 
     // View
-    tableView.rx.itemSelected
+    movieTableView.rx.itemSelected
       .subscribe(onNext: { [weak self, weak reactor] indexPath in
         guard let `self` = self else { return }
         self.view.endEditing(true)
-        self.tableView.deselectRow(at: indexPath, animated: false)
+        self.movieTableView.deselectRow(at: indexPath, animated: false)
         guard let movie = reactor?.currentState.movies[indexPath.row] else { return }
         guard let url = URL(string: movie.link) else { return }
         let viewController = SFSafariViewController(url: url)
