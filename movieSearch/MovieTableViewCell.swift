@@ -8,30 +8,30 @@
 import UIKit
 
 class MovieTableViewCell: UITableViewCell {
-  @IBOutlet weak var posterImageView: UIImageView!
-  @IBOutlet weak var titleLabel: UILabel!
-  @IBOutlet weak var directorLabel: UILabel!
-  @IBOutlet weak var actorLabel: UILabel!
-  @IBOutlet weak var userRatingLabel: UILabel!
-  
-  override func awakeFromNib() {
-      super.awakeFromNib()
-      // Initialization code
-  }
-
-  override func setSelected(_ selected: Bool, animated: Bool) {
-      super.setSelected(selected, animated: animated)
-
-      // Configure the view for the selected state
-  }
-
-  func putData(_ movie: Movie) {
+	@IBOutlet weak var posterImageView: UIImageView!
+	@IBOutlet weak var titleLabel: UILabel!
+	@IBOutlet weak var directorLabel: UILabel!
+	@IBOutlet weak var actorLabel: UILabel!
+	@IBOutlet weak var userRatingLabel: UILabel!
+	
+	override func awakeFromNib() {
+		super.awakeFromNib()
+		// Initialization code
+	}
+	
+	override func setSelected(_ selected: Bool, animated: Bool) {
+		super.setSelected(selected, animated: animated)
+		
+		// Configure the view for the selected state
+	}
+	
+	func putData(_ movie: Movie) {
 		downloadImage(from: movie.image)
 		self.titleLabel.text = movie.title
 		self.directorLabel.text = movie.director
 		self.actorLabel.text = movie.actor
 		self.userRatingLabel.text = movie.userRating
-  }
+	}
 	
 	private func downloadImage(from: String) {
 		guard let url = URL(string: from) else { return }
