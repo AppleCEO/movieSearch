@@ -11,11 +11,19 @@ import Foundation
 struct MovieSearchModel: Codable {
     let lastBuildDate: String?
     let total, start, display: Int?
-    let items: [Item]?
+    let movies: [Movie]?
+  
+    enum CodingKeys: String, CodingKey {
+        case lastBuildDate = "lastBuildDate"
+        case total = "total"
+        case start = "start"
+        case display = "display"
+        case movies = "items"
+    }
 }
 
 // MARK: - Item
-struct Item: Codable {
+struct Movie: Codable {
     let title: String
     let link: String
     let image: String

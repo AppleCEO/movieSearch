@@ -52,9 +52,9 @@ class MovieSearchViewController: UIViewController, StoryboardView {
       .disposed(by: disposeBag)
 
     // State
-    reactor.state.map { $0.repos }
-      .bind(to: tableView.rx.items(cellIdentifier: "cell")) { indexPath, repo, cell in
-        cell.textLabel?.text = repo
+    reactor.state.map { $0.movies }
+      .bind(to: tableView.rx.items(cellIdentifier: "cell")) { indexPath, movie, cell in
+        cell.textLabel?.text = movie.title
       }
       .disposed(by: disposeBag)
 
@@ -64,8 +64,8 @@ class MovieSearchViewController: UIViewController, StoryboardView {
         guard let `self` = self else { return }
         self.view.endEditing(true)
         self.tableView.deselectRow(at: indexPath, animated: false)
-        guard let repo = reactor?.currentState.repos[indexPath.row] else { return }
-        guard let url = URL(string: "https://github.com/\(repo)") else { return }
+        guard let movie = reactor?.currentState.movies[indexPath.row] else { return }
+        guard let url = URL(string: movie.link) else { return }
         let viewController = SFSafariViewController(url: url)
         self.searchController.present(viewController, animated: true, completion: nil)
       })

@@ -19,14 +19,14 @@ final class MovieSearchViewReactor: Reactor {
 
   enum Mutation {
     case setQuery(String?)
-    case setRepos([String])
-    case appendRepos([String])
+    case setMovies([Movie])
+    case appendMovies([Movie])
     case setLoadingNextPage(Bool)
   }
 
   struct State {
     var query: String?
-    var repos: [String] = []
+    var movies: [Movie] = []
     var nextPage: Int?
     var isLoadingNextPage: Bool = false
   }
@@ -44,7 +44,7 @@ final class MovieSearchViewReactor: Reactor {
         self.search(query: query)
           // cancel previous request when the new `.updateQuery` action is fired
           .takeUntil(self.action.filter(Action.isUpdateQueryAction))
-          .map { Mutation.setRepos($0) },
+          .map { Mutation.setMovies($0) },
       ])
 
     case .loadNextPage:
@@ -57,7 +57,7 @@ final class MovieSearchViewReactor: Reactor {
         // 2) call API and append repos
         self.search(query: self.currentState.query)
           .takeUntil(self.action.filter(Action.isUpdateQueryAction))
-          .map { Mutation.appendRepos($0) },
+          .map { Mutation.appendMovies($0) },
 
         // 3) set loading status to false
         Observable.just(Mutation.setLoadingNextPage(false)),
@@ -72,14 +72,14 @@ final class MovieSearchViewReactor: Reactor {
       newState.query = query
       return newState
 
-    case let .setRepos(repos):
+    case let .setMovies(movies):
       var newState = state
-      newState.repos = repos
+      newState.movies = movies
       return newState
 
-    case let .appendRepos(repos):
+    case let .appendMovies(movies):
       var newState = state
-      newState.repos.append(contentsOf: repos)
+      newState.movies.append(contentsOf: movies)
       return newState
 
     case let .setLoadingNextPage(isLoadingNextPage):
@@ -95,20 +95,19 @@ final class MovieSearchViewReactor: Reactor {
     return URL(string: "https://openapi.naver.com/v1/search/movie.json?query=\(eoncodedQuery)")
   }
 
-  private func search(query: String?) -> Observable<([String])> {
-    let emptyResult: ([String]) = ([])
+  private func search(query: String?) -> Observable<([Movie])> {
+    let emptyResult: ([Movie]) = ([])
     guard let url = self.url(for: query) else { return .just(emptyResult) }
     var request = URLRequest(url: url)
     request.httpMethod = "GET"
     request.setValue("FU2L100PvGKdZqxBo9y7", forHTTPHeaderField:"X-Naver-Client-Id")
     request.setValue("HhgDo2janG", forHTTPHeaderField:"X-Naver-Client-Secret")
     return URLSession.shared.rx.data(request: request)
-      .map { data -> ([String]) in
+      .map { data -> ([Movie]) in
         let decoder: JSONDecoder = JSONDecoder()
         let model = try decoder.decode(MovieSearchModel.self, from: data)
-        guard let items = model.items else { return emptyResult }
-        let repos = items.compactMap { $0.title }
-        return (repos)
+        guard let movies = model.movies else { return emptyResult }
+        return (movies)
       }
       .do(onError: { error in
         if case let .some(.httpRequestFailed(response, _)) = error as? RxCocoaURLError, response.statusCode == 403 {
