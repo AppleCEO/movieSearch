@@ -3,12 +3,13 @@
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="18093"/>
+        <capability name="Image references" minToolsVersion="12.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
-        <!--Movie Search-->
+        <!--네이버 영화 검색-->
         <scene sceneID="tne-QT-ifu">
             <objects>
                 <viewController id="BYZ-38-t0r" customClass="MovieSearchViewController" customModule="movieSearch" customModuleProvider="target" sceneMemberID="viewController">
@@ -42,7 +43,7 @@
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="director" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="OtO-0R-OhL">
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="감독 : " textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="OtO-0R-OhL">
                                                     <rect key="frame" x="81" y="29" width="323" height="21"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="21" id="cEK-vl-EpV"/>
@@ -51,7 +52,7 @@
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="actor" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="vn2-Dr-wq7">
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="출연 : " textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="vn2-Dr-wq7">
                                                     <rect key="frame" x="81" y="53" width="323" height="21"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="21" id="7gn-vS-7QZ"/>
@@ -60,8 +61,8 @@
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="userRating" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="lCZ-fQ-MsN">
-                                                    <rect key="frame" x="81" y="77" width="323" height="47"/>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="평점 : " textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="lCZ-fQ-MsN">
+                                                    <rect key="frame" x="81" y="77" width="301" height="47"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="21" id="b68-7j-cgU"/>
                                                     </constraints>
@@ -69,18 +70,30 @@
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
+                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Ggw-lh-M3J">
+                                                    <rect key="frame" x="387" y="89.5" width="22" height="22"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="height" constant="22" id="wvr-eP-Pca"/>
+                                                        <constraint firstAttribute="width" constant="22" id="z5X-Hx-Ip2"/>
+                                                    </constraints>
+                                                    <state key="normal" title="Button">
+                                                        <imageReference key="image" image="star" catalog="system" renderingMode="original"/>
+                                                    </state>
+                                                </button>
                                             </subviews>
                                             <constraints>
-                                                <constraint firstAttribute="trailing" secondItem="lCZ-fQ-MsN" secondAttribute="trailing" constant="10" id="3bj-B0-3gL"/>
                                                 <constraint firstItem="9VI-wE-dJi" firstAttribute="leading" secondItem="EiA-tn-wtv" secondAttribute="trailing" constant="10" id="4da-32-1rc"/>
                                                 <constraint firstItem="EiA-tn-wtv" firstAttribute="top" secondItem="Tr9-5m-ul0" secondAttribute="top" constant="5" id="7B9-jp-5H4"/>
                                                 <constraint firstItem="vn2-Dr-wq7" firstAttribute="leading" secondItem="EiA-tn-wtv" secondAttribute="trailing" constant="10" id="7bh-MA-Frn"/>
                                                 <constraint firstItem="lCZ-fQ-MsN" firstAttribute="leading" secondItem="EiA-tn-wtv" secondAttribute="trailing" constant="10" id="7m5-z1-AAF"/>
                                                 <constraint firstItem="OtO-0R-OhL" firstAttribute="top" secondItem="9VI-wE-dJi" secondAttribute="bottom" constant="3" id="Aqt-it-FGL"/>
                                                 <constraint firstAttribute="trailing" secondItem="OtO-0R-OhL" secondAttribute="trailing" constant="10" id="Dpe-Xx-388"/>
+                                                <constraint firstAttribute="trailing" secondItem="Ggw-lh-M3J" secondAttribute="trailing" constant="5" id="NHe-es-FFH"/>
                                                 <constraint firstAttribute="bottom" secondItem="lCZ-fQ-MsN" secondAttribute="bottom" constant="5" id="QVL-DB-U6H"/>
                                                 <constraint firstItem="vn2-Dr-wq7" firstAttribute="top" secondItem="OtO-0R-OhL" secondAttribute="bottom" constant="3" id="SGr-6N-D2E"/>
                                                 <constraint firstAttribute="trailing" secondItem="vn2-Dr-wq7" secondAttribute="trailing" constant="10" id="Sas-Ao-OgK"/>
+                                                <constraint firstItem="Ggw-lh-M3J" firstAttribute="centerY" secondItem="lCZ-fQ-MsN" secondAttribute="centerY" id="UvG-R5-EIK"/>
+                                                <constraint firstItem="Ggw-lh-M3J" firstAttribute="leading" secondItem="lCZ-fQ-MsN" secondAttribute="trailing" constant="5" id="Vdu-7I-NJR"/>
                                                 <constraint firstAttribute="trailing" secondItem="9VI-wE-dJi" secondAttribute="trailing" constant="10" id="c40-Wc-Xsu"/>
                                                 <constraint firstItem="OtO-0R-OhL" firstAttribute="leading" secondItem="EiA-tn-wtv" secondAttribute="trailing" constant="10" id="nPj-Ia-MTJ"/>
                                                 <constraint firstItem="9VI-wE-dJi" firstAttribute="top" secondItem="Tr9-5m-ul0" secondAttribute="top" constant="5" id="s31-AS-4d5"/>
@@ -109,7 +122,11 @@
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="RGQ-Oa-MI2" secondAttribute="trailing" id="uLd-Bn-7qL"/>
                         </constraints>
                     </view>
-                    <navigationItem key="navigationItem" title="Movie Search" id="IZG-sR-zCk"/>
+                    <navigationItem key="navigationItem" title="네이버 영화 검색" id="IZG-sR-zCk">
+                        <barButtonItem key="rightBarButtonItem" title="즐겨찾기" id="LBa-jK-1ef">
+                            <imageReference key="image" image="star.fill" catalog="system" symbolScale="medium" renderingMode="original"/>
+                        </barButtonItem>
+                    </navigationItem>
                     <connections>
                         <outlet property="movieTableView" destination="RGQ-Oa-MI2" id="7T9-3k-xwe"/>
                     </connections>
@@ -136,6 +153,8 @@
         </scene>
     </scenes>
     <resources>
+        <image name="star" catalog="system" width="128" height="116"/>
+        <image name="star.fill" catalog="system" width="128" height="116"/>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>

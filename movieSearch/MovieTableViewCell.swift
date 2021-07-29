@@ -28,9 +28,9 @@ class MovieTableViewCell: UITableViewCell {
 	func putData(_ movie: Movie) {
 		downloadImage(from: movie.image)
 		self.titleLabel.text = removeHTMLTagFrom(movie.title)
-		self.directorLabel.text = movie.director
-		self.actorLabel.text = movie.actor
-		self.userRatingLabel.text = movie.userRating
+		self.directorLabel.text = Role.director.rawValue+movie.director
+		self.actorLabel.text = Role.actor.rawValue+movie.actor
+		self.userRatingLabel.text = Role.userRating.rawValue+movie.userRating
 	}
 	
 	private func downloadImage(from: String) {
