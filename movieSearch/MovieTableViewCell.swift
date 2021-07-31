@@ -50,4 +50,12 @@ class MovieTableViewCell: UITableViewCell {
 	private func removeHTMLTagFrom(_ string: String) -> String {
 		return string.replacingOccurrences(of: "<[^>]+>", with: "", options: .regularExpression, range: nil)
 	}
+	
+	override func prepareForReuse() {
+		self.posterImageView.image = nil
+		self.titleLabel.text = nil
+		self.directorLabel.text = nil
+		self.actorLabel.text = nil
+		self.userRatingLabel.text = nil
+	}
 }
