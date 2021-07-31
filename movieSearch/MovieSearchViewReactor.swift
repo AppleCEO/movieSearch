@@ -19,8 +19,8 @@ final class MovieSearchViewReactor: Reactor {
 	
 	enum Mutation {
 		case setQuery(String?)
-		case setMovies([Movie])
-		case appendMovies([Movie])
+		case setMovies([Movie], nextPage: Int?)
+		case appendMovies([Movie], nextPage: Int?)
 		case setLoadingNextPage(Bool)
 	}
 	
@@ -41,10 +41,10 @@ final class MovieSearchViewReactor: Reactor {
 				Observable.just(Mutation.setQuery(query)),
 				
 				// 2) call API and set repos (.setRepos)
-				self.search(query: query)
+				self.search(query: query, page: 1)
 					// cancel previous request when the new `.updateQuery` action is fired
 					.takeUntil(self.action.filter(Action.isUpdateQueryAction))
-					.map { Mutation.setMovies($0) },
+					.map { Mutation.setMovies($0, nextPage: $1) },
 			])
 			
 		case .loadNextPage:
@@ -55,9 +55,9 @@ final class MovieSearchViewReactor: Reactor {
 				Observable.just(Mutation.setLoadingNextPage(true)),
 				
 				// 2) call API and append repos
-				self.search(query: self.currentState.query)
+				self.search(query: self.currentState.query, page: page)
 					.takeUntil(self.action.filter(Action.isUpdateQueryAction))
-					.map { Mutation.appendMovies($0) },
+					.map { Mutation.appendMovies($0, nextPage: $1) },
 				
 				// 3) set loading status to false
 				Observable.just(Mutation.setLoadingNextPage(false)),
@@ -72,14 +72,16 @@ final class MovieSearchViewReactor: Reactor {
 			newState.query = query
 			return newState
 			
-		case let .setMovies(movies):
+		case let .setMovies(movies, nextPage):
 			var newState = state
 			newState.movies = movies
+			newState.nextPage = nextPage
 			return newState
 			
-		case let .appendMovies(movies):
+		case let .appendMovies(movies, nextPage):
 			var newState = state
 			newState.movies.append(contentsOf: movies)
+			newState.nextPage = nextPage
 			return newState
 			
 		case let .setLoadingNextPage(isLoadingNextPage):
@@ -89,25 +91,27 @@ final class MovieSearchViewReactor: Reactor {
 		}
 	}
 	
-	private func url(for query: String?) -> URL? {
+	private func url(for query: String?, page: Int) -> URL? {
 		guard let query = query, !query.isEmpty else { return nil }
 		guard let eoncodedQuery = query.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) else { return nil }
-		return URL(string: "https://openapi.naver.com/v1/search/movie.json?query=\(eoncodedQuery)")
+		let start = page * 10 + 1
+		return URL(string: "https://openapi.naver.com/v1/search/movie.json?query=\(eoncodedQuery)&start=\(start)")
 	}
 	
-	private func search(query: String?) -> Observable<([Movie])> {
-		let emptyResult: ([Movie]) = ([])
-		guard let url = self.url(for: query) else { return .just(emptyResult) }
+	private func search(query: String?, page: Int) -> Observable<([Movie], nextPage: Int?)> {
+		let emptyResult: ([Movie], Int?) = ([], nil)
+		guard let url = self.url(for: query, page: page) else { return .just(emptyResult) }
 		var request = URLRequest(url: url)
 		request.httpMethod = "GET"
 		request.setValue("FU2L100PvGKdZqxBo9y7", forHTTPHeaderField:"X-Naver-Client-Id")
 		request.setValue("HhgDo2janG", forHTTPHeaderField:"X-Naver-Client-Secret")
 		return URLSession.shared.rx.data(request: request)
-			.map { data -> ([Movie]) in
+			.map { data -> ([Movie], Int?) in
 				let decoder: JSONDecoder = JSONDecoder()
 				let model = try decoder.decode(MovieSearchModel.self, from: data)
 				guard let movies = model.movies else { return emptyResult }
-				return (movies)
+				let nextPage = movies.isEmpty ? nil : page + 1
+				return (movies, nextPage)
 			}
 			.do(onError: { error in
 				if case let .some(.httpRequestFailed(response, _)) = error as? RxCocoaURLError, response.statusCode == 403 {
