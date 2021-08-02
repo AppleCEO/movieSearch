@@ -41,7 +41,7 @@ final class MovieSearchViewReactor: Reactor {
 				Observable.just(Mutation.setQuery(query)),
 				
 				// 2) call API and set repos (.setRepos)
-				self.search(query: query, page: 1)
+				self.search(query: query, page: 0)
 					// cancel previous request when the new `.updateQuery` action is fired
 					.takeUntil(self.action.filter(Action.isUpdateQueryAction))
 					.map { Mutation.setMovies($0, nextPage: $1) },
